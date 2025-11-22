@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Medibot — PWA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    if ('serviceWorker' in navigator) {
+      try { navigator.serviceWorker.register('/static/sw.js'); } catch(e) { console.warn(e); }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header><h1>Medibot</h1><p>Your educational health assistant (not a diagnosis)</p></header>
+
+    <section class="card">
+      <h2>Chat / Ask</h2>
+      <textarea id="chatInput" placeholder="Ask questions (e.g., 'What helps a mild fever?')"></textarea>
+      <div style="display:flex;gap:8px;">
+        <button id="btnChat">Ask</button>
+        <button id="btnSummary">Daily Summary</button>
+      </div>
+      <pre id="chatOut" class="result"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Summarize Medical Text</h2>
+      <textarea id="reportText" placeholder="Paste report or clinical note"></textarea>
+      <button id="btnSumm">Summarize</button>
+      <pre id="summOut" class="result"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Image Explainer (educational)</h2>
+      <input type="file" id="imageFile" accept="image/*">
+      <button id="btnUpload">Upload & Analyze</button>
+      <pre id="imgOut" class="result"></pre>
+      <p>Test server file: <code>/mnt/data/Screenshot_2025-11-21_16_28_59.png</code></p>
+      <input id="localPath" placeholder="/path/to/file" value="/mnt/data/Screenshot_2025-11-21_16_28_59.png" />
+      <button id="btnAnalyzeLocal">Analyze Server File (test)</button>
+    </section>
+
+    <section class="card">
+      <h2>Reminders & Notes</h2>
+      <input id="remName" placeholder="Medicine / Task name" />
+      <input id="remTime" type="time" />
+      <button id="btnAddRem">Add Reminder</button>
+      <ul id="remList"></ul>
+
+      <h3>Notes</h3>
+      <textarea id="noteText" placeholder="Daily notes..."></textarea>
+      <button id="btnAddNote">Save Note</button>
+      <ul id="noteList"></ul>
+
+      <h3>Water</h3>
+      <div><span id="waterCount">0</span> glasses today</div>
+      <button id="btnAddWater">+ Drink</button>
+    </section>
+
+    <footer class="disclaimer">
+      <strong>Disclaimer:</strong> Educational only. Not a medical diagnosis.
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

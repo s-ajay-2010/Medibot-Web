@@ -1,0 +1,6 @@
+Flask==2.2.5
+python-dotenv==1.0.0
+pillow
+opencv-python-headless
+numpy
+google-generativeai
