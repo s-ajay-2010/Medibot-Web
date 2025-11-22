@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="manifest" href="/static/manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/static/service-worker.js");
+  }
+</script>
   <meta charset="utf-8" />
   <title>Medibot — PWA</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
