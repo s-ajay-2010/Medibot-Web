@@ -1,4 +1,4 @@
-// static/app.js
+
 const API = (p) => `/api/${p}`;
 
 async function postJSON(path, body){
@@ -7,7 +7,7 @@ async function postJSON(path, body){
 }
 async function getJSON(path){ const res = await fetch(path); return res.json(); }
 
-// Chat
+
 document.getElementById('btnChat').onclick = async ()=>{
   const txt = document.getElementById('chatInput').value.trim();
   if(!txt) return alert('Type a message');
@@ -15,13 +15,13 @@ document.getElementById('btnChat').onclick = async ()=>{
   document.getElementById('chatOut').innerText = r.reply || JSON.stringify(r);
 };
 
-// Daily summary
+
 document.getElementById('btnSummary').onclick = async ()=>{
   const r = await getJSON(API('daily_summary'));
   document.getElementById('chatOut').innerText = r.summary || JSON.stringify(r);
 };
 
-// Summarize
+
 document.getElementById('btnSumm').onclick = async ()=>{
   const t = document.getElementById('reportText').value.trim();
   if(!t) return alert('Paste text');
@@ -29,7 +29,7 @@ document.getElementById('btnSumm').onclick = async ()=>{
   document.getElementById('summOut').innerText = r.summary || JSON.stringify(r);
 };
 
-// Image Upload
+
 document.getElementById('btnUpload').onclick = async ()=>{
   const f = document.getElementById('imageFile').files[0];
   if(!f) return alert('Choose image');
@@ -40,7 +40,6 @@ document.getElementById('btnUpload').onclick = async ()=>{
   document.getElementById('imgOut').innerText = j.description || JSON.stringify(j);
 };
 
-// analyze local server file
 document.getElementById('btnAnalyzeLocal').onclick = async ()=>{
   const path = document.getElementById('localPath').value.trim();
   if(!path) return alert('enter path');
@@ -48,7 +47,7 @@ document.getElementById('btnAnalyzeLocal').onclick = async ()=>{
   document.getElementById('imgOut').innerText = r.description || JSON.stringify(r);
 };
 
-// Reminders + Notes + Water
+
 document.getElementById('btnAddRem').onclick = async ()=>{
   const name = document.getElementById('remName').value, time = document.getElementById('remTime').value;
   if(!name || !time) return alert('fill');
@@ -83,7 +82,7 @@ document.getElementById('btnAddWater').onclick = async ()=>{
   await postJSON(API('water'), {date, count});
   document.getElementById('waterCount').innerText = count;
 };
-(async ()=>{ // init water count for today
+(async ()=>{ 
   const date = new Date().toISOString().slice(0,10);
   const cur = await getJSON(API('water') + '?date=' + encodeURIComponent(date));
   document.getElementById('waterCount').innerText = (cur.count || 0);

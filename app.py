@@ -1,4 +1,3 @@
-# app.py (FULLY FIXED)
 import os
 import sqlite3
 from flask import Flask, request, jsonify, send_from_directory
@@ -7,17 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# -------------------------------------------------------
-# CONFIG
-# -------------------------------------------------------
+
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 DB_PATH = os.path.join(os.getcwd(), "medibot.db")
 
-# -------------------------------------------------------
-# GEMINI SETUP
-# -------------------------------------------------------
+
 USE_GEMINI = bool(GEMINI_KEY)
 if USE_GEMINI:
     try:
@@ -27,9 +22,7 @@ if USE_GEMINI:
 
     genai.configure(api_key=GEMINI_KEY)
 
-# -------------------------------------------------------
-# OPTIONAL IMAGE LIBS
-# -------------------------------------------------------
+
 try:
     from PIL import Image
     import cv2
@@ -38,15 +31,11 @@ try:
 except Exception:
     HAS_IMG = False
 
-# -------------------------------------------------------
-# FLASK SETUP
-# -------------------------------------------------------
+
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# -------------------------------------------------------
-# DATABASE INIT
-# -------------------------------------------------------
+
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -126,9 +115,7 @@ def set_water_count(date_str, count):
     conn.commit()
     conn.close()
 
-# -------------------------------------------------------
-# SAFE PREFIX FOR AI
-# -------------------------------------------------------
+
 def safe_prefix():
     return (
         "You are Medibot, an educational health assistant. "
@@ -136,9 +123,7 @@ def safe_prefix():
         "Recommend real doctors when needed.\n\n"
     )
 
-# -------------------------------------------------------
-# GEMINI FIX (WORKS 100% ALWAYS)
-# -------------------------------------------------------
+
 def gemini_generate(prompt):
     try:
         model = genai.GenerativeModel("gemini-2.0-flash")
@@ -157,9 +142,7 @@ def generate_text(user_input):
         return "AI error. Try again."
     return "AI not configured. Add GEMINI_API_KEY in your .env"
 
-# -------------------------------------------------------
-# IMAGE ANALYSIS
-# -------------------------------------------------------
+
 def image_describe(path):
     if not HAS_IMG:
         return "Image libraries not installed."
@@ -177,9 +160,7 @@ def image_describe(path):
         "Not a diagnosis."
     )
 
-# -------------------------------------------------------
-# ROUTES
-# -------------------------------------------------------
+
 @app.route("/")
 def index():
     return send_from_directory("templates", "index.html")
@@ -286,9 +267,7 @@ def api_daily_summary():
         "reminders": reminders
     })
 
-# -------------------------------------------------------
-# STARTUP
-# -------------------------------------------------------
+
 if __name__ == "__main__":
     init_db()
     port = int(os.getenv("PORT", 5000))
