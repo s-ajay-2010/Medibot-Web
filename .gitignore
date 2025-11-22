@@ -2,3 +2,5 @@
 /.env
 /node_modules
 /venve
+/uploads
+/medibot.db
