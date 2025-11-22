@@ -121,7 +121,7 @@ def gemini_generate(prompt, max_output_tokens=512):
         raise RuntimeError("Gemini not configured")
     try:
         resp = genai.responses.create(
-            model="gemini-2.0-flash",
+            model="gemini-1.5-flash",
             input=prompt,
             max_output_tokens=max_output_tokens
         )
