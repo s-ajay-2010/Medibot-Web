@@ -1,11 +1,12 @@
 Medibot — Web version (PWA)
 
-Deploy backend (Railway recommended) and host frontend (Netlify or Vercel).
-- Put your GEMINI_API_KEY in project .env or Railway env variables.
-- Install deps: pip install -r requirements.txt
-- Run locally: python app.py (visit http://127.0.0.1:5000)
+To use this repo:
+  - In terminal: git clone https://github.com/s-ajay-2010/Medibot-Web.git .
+  - Create a python virtual environment(by entering: python3 venv {your virtual environment's name}) or straightaway proceed to next step if the next step works perfectly.
+  - In terminal goto the cloned repo's folder and then: pip -r requirements.txt .
+  - Copy the .env.example file as .env file and replace the value of the variables to your respective API key.
+  - In terminal: python3 app.py .
+  - Then in your browser open http://localhost:5000 or http://127.0.0.1:5000 .
 
-Deploy notes included in project root.
 That's all, but if you deploy this somewhere in real world, please give credit.
-To clone this repo: git clone https://github.com/s-ajay-2010/Medibot-Web.git
 Byee:)
