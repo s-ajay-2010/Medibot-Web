@@ -248,6 +248,10 @@ def api_get_water_route():
     cur = get_water_count(date)
     return jsonify({"count": cur["count"] if cur else 0})
 
+@app.route("/.well-known/assestlinks.json")
+def assetlinks():
+    return send_from_directory(".","assetlinks.json",mimetype="application/json")
+
 @app.route("/api/daily_summary", methods=["GET"])
 def api_daily_summary():
     notes = list_notes(10)
