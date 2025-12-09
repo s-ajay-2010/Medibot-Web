@@ -126,7 +126,7 @@ def safe_prefix():
 
 def gemini_generate(prompt):
     try:
-        model = genai.GenerativeModel("gemini-2.0-flash")
+        model = genai.GenerativeModel("gemini-2.5-flash-lite")
         resp = model.generate_content(prompt)
         return resp.text
     except Exception as e:
