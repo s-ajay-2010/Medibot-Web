@@ -8,5 +8,7 @@ To use this repo:
   - In terminal: python3 app.py .
   - Then in your browser open http://localhost:5000 or http://127.0.0.1:5000 .
 
+Also if you want, you can also install the webview app(prototype app) using the medibot.apk in your phone, but please don't overuse the app.
+
 That's all, but if you deploy this somewhere in real world, please give credit.
 Byee:)
