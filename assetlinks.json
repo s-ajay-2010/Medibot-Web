@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.your.package", 
+      "package_name": "app.railway.up.medibot.twa", 
       "sha256_cert_fingerprints": [
-        "AA:BB:CC:DD:...:ZZ" 
+        "68:F2:36:0D:B2:8A:7C:42:07:AC:88:40:D3:29:1C:D2:43:EA:F2:83:43:70:9D:95:27:78:FF:0E:1B:4D:BA:DD" 
       ]
     }
   }
