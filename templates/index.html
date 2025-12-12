@@ -16,7 +16,6 @@
       <textarea id="chatInput" placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
       <div style="display:flex;gap:8px;">
         <button id="btnChat">Ask</button>
-        <button id="btnVoice">🎙️ Voice</button>
         <button id="btnSummary">Daily Summary</button>
       </div>
       <pre id="chatOut" class="result"></pre>
@@ -34,14 +33,11 @@
       <input type="file" id="imageFile" accept="image/*">
       <button id="btnUpload">Upload & Analyze</button>
 
-      <h3>Local Computer Vision</h3>
-      <pre id="localOut" class="result"></pre>
-
-      <h3>Gemini Vision (educational)</h3>
+      <h3>Medibot Vision (educational)</h3>
       <pre id="geminiOut" class="result"></pre>
 
       <p>Test server file (for dev):</p>
-      <input id="localPath" placeholder="/path/to/file" value="/mnt/data/Screenshot_2025-11-21_16_28_59.png" />
+      <input id="localPath" placeholder="/path/to/file" value="" />
       <button id="btnAnalyzeLocal">Analyze Server File (test)</button>
     </section>
 
