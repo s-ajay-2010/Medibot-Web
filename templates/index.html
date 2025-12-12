@@ -39,15 +39,23 @@
       <pre id="summOut" class="result"></pre>
     </section>
 
-    <section class="card">
-      <h2>Image Explainer (educational)</h2>
-      <input type="file" id="imageFile" accept="image/*">
-      <button id="btnUpload">Upload & Analyze</button>
-      <pre id="imgOut" class="result"></pre>
+  <section class="card">
+   <h2>Image Explainer (educational)</h2>
 
-      <input id="localpath" placeholder="/path/to/file" value="" />
-      <button id="btnAnalyzeLocal">Analyze Server File(for testing perposes, not for uses)</button>
-    </section>
+   <input type="file" id="imageFile">
+   <button id="btnUpload">Upload & Analyze</button>
+
+   <h3>Local Image Analysis</h3>
+   <pre id="localOut" class="result"></pre>
+
+   <h3>Gemini Vision Analysis</h3>
+   <pre id="geminiOut" class="result"></pre>
+
+   <p>Analyze a server file:</p>
+   <input id="localPath" placeholder="/path/to/file" />
+   <button id="btnAnalyzeLocal">Analyze Server File</button>
+  </section>
+
 
     <section class="card">
       <h2>Reminders & Notes</h2>

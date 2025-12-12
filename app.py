@@ -160,6 +160,15 @@ def image_describe(path):
         "Not a diagnosis."
     )
 
+def safe_image_prompt():
+    return (
+        "You are Medibot, an educational health assistant. "
+        "You can describe what is visually present in the image in SIMPLE, non-expert terms. "
+        "You MUST NOT diagnose any disease, condition, or medical problem. "
+        "Only describe visible patterns like redness, swelling, marks, shapes, shadows, objects, etc. "
+        "If something looks unusual, say it *may appear unusual*, not that it *is* a disease. "
+        "Always end by telling the user to consult a doctor for proper medical interpretation.\n\n"
+    )
 
 @app.route("/")
 def index():
@@ -190,12 +199,33 @@ def api_summarize():
 @app.route("/api/upload_image", methods=["POST"])
 def api_upload_image():
     if "image" not in request.files:
-        return jsonify({"error":"no file"}), 400
+        return jsonify({"error": "no file"}), 400
+
     f = request.files["image"]
     name = secure_filename(f.filename)
-    target = os.path.join(app.config["UPLOAD_FOLDER"], name)
-    f.save(target)
-    return jsonify({"description": image_describe(target)})
+    path = os.path.join(app.config["UPLOAD_FOLDER"], name)
+    f.save(path)
+
+    # 1. Local OpenCV analysis
+    local_desc = image_describe(path)
+
+    # 2. Gemini Vision analysis (if enabled)
+    gem_desc = None
+    if USE_GEMINI:
+        try:
+            gem_desc = gemini_generate(
+                safe_prefix()
+                + "Explain this image in simple educational terms. No diagnosis."
+            )
+        except Exception as e:
+            gem_desc = f"Gemini error: {e}"
+
+    return jsonify({
+        "local_description": local_desc,
+        "gemini_description": gem_desc
+    })
+
+
 
 @app.route("/api/analyze_local", methods=["POST"])
 def api_analyze_local():

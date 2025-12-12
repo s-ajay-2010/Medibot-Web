@@ -32,20 +32,44 @@ document.getElementById('btnSumm').onclick = async ()=>{
 
 document.getElementById('btnUpload').onclick = async ()=>{
   const f = document.getElementById('imageFile').files[0];
-  if(!f) return alert('Choose image');
+  if (!f) return alert("Choose image first");
+
   const fd = new FormData();
-  fd.append('image', f);
-  const res = await fetch('/api/upload_image', {method:'POST', body: fd});
+  fd.append("image", f);
+
+  const res = await fetch("/api/upload_image", {
+    method: "POST",
+    body: fd
+  });
+
   const j = await res.json();
-  document.getElementById('imgOut').innerText = j.description || JSON.stringify(j);
+
+  document.getElementById("localOut").innerText =
+    j.local_description || "No local analysis";
+
+  document.getElementById("geminiOut").innerText =
+    j.gemini_description || "No Gemini output";
 };
+
+
 
 document.getElementById('btnAnalyzeLocal').onclick = async ()=>{
   const path = document.getElementById('localPath').value.trim();
-  if(!path) return alert('enter path');
-  const r = await postJSON(API('analyze_local'), {path});
-  document.getElementById('imgOut').innerText = r.description || JSON.stringify(r);
+  if (!path) return alert("Enter path");
+
+  const r = await fetch('/api/analyze_local', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({path})
+  });
+  const j = await r.json();
+
+  document.getElementById("localOut").innerText =
+    j.local_description || "N/A";
+  document.getElementById("geminiOut").innerText =
+    j.gemini_description || "N/A";
 };
+
 
 
 document.getElementById('btnAddRem').onclick = async ()=>{
