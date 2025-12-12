@@ -1,32 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="/static/manifest.json">
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/static/service-worker.js");
-  }
-</script>
   <meta charset="utf-8" />
-  <title>Medibot — PWA</title>
+  <title>Medibot S2 — Educational Health Assistant</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="manifest" href="/static/manifest.json">
   <link rel="stylesheet" href="/static/style.css">
-  <script>
-    if ('serviceWorker' in navigator) {
-      try { navigator.serviceWorker.register('/static/sw.js'); } catch(e) { console.warn(e); }
-    }
-  </script>
 </head>
 <body>
   <div class="container">
-    <header><h1>Medibot</h1><p>Your educational health assistant (not a diagnosis)</p></header>
+    <header><h1>Medibot S2</h1><p>Your educational health companion (not a diagnosis)</p></header>
 
     <section class="card">
       <h2>Chat / Ask</h2>
-      <textarea id="chatInput" placeholder="Ask questions (e.g., 'What helps a mild fever?')"></textarea>
+      <textarea id="chatInput" placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
       <div style="display:flex;gap:8px;">
         <button id="btnChat">Ask</button>
+        <button id="btnVoice">🎙️ Voice</button>
         <button id="btnSummary">Daily Summary</button>
       </div>
       <pre id="chatOut" class="result"></pre>
@@ -39,23 +29,21 @@
       <pre id="summOut" class="result"></pre>
     </section>
 
-  <section class="card">
-   <h2>Image Explainer (educational)</h2>
+    <section class="card">
+      <h2>Image Explainer (educational)</h2>
+      <input type="file" id="imageFile" accept="image/*">
+      <button id="btnUpload">Upload & Analyze</button>
 
-   <input type="file" id="imageFile">
-   <button id="btnUpload">Upload & Analyze</button>
+      <h3>Local Computer Vision</h3>
+      <pre id="localOut" class="result"></pre>
 
-   <h3>Local Image Analysis</h3>
-   <pre id="localOut" class="result"></pre>
+      <h3>Gemini Vision (educational)</h3>
+      <pre id="geminiOut" class="result"></pre>
 
-   <h3>Gemini Vision Analysis</h3>
-   <pre id="geminiOut" class="result"></pre>
-
-   <p>Analyze a server file:</p>
-   <input id="localPath" placeholder="/path/to/file" />
-   <button id="btnAnalyzeLocal">Analyze Server File</button>
-  </section>
-
+      <p>Test server file (for dev):</p>
+      <input id="localPath" placeholder="/path/to/file" value="/mnt/data/Screenshot_2025-11-21_16_28_59.png" />
+      <button id="btnAnalyzeLocal">Analyze Server File (test)</button>
+    </section>
 
     <section class="card">
       <h2>Reminders & Notes</h2>
@@ -75,10 +63,10 @@
     </section>
 
     <footer class="disclaimer">
-      <strong>Disclaimer:</strong> Educational only. Not a medical diagnosis.
+      <strong>Disclaimer:</strong> This is educational only. Not a medical diagnosis. Seek a licensed clinician for medical decisions.
     </footer>
   </div>
 
-  <script src="/static/app.js"></script>
+  <script src="/static/app_full.js"></script>
 </body>
 </html>

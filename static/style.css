@@ -4,5 +4,5 @@ header{text-align:center}
 .card{background:#111315;padding:18px;border-radius:12px;border:1px solid #1f2226}
 textarea,input{width:100%;padding:8px;border-radius:6px;border:1px solid #222;background:#0b0c0f;color:#eaeef2}
 button{padding:8px 12px;border-radius:8px;border:none;background:#00c0ff;color:#002}
-.result{background:#050608;padding:10px;border-radius:6px;color:#9fb4c7;white-space:pre-wrap}
+.result{background:#050608;padding:10px;border-radius:6px;color:#9fb4c7;white-space:pre-wrap;min-height:40px}
 .disclaimer{grid-column:1/-1;margin-top:10px;padding:10px;background:#0b0c0f;border-radius:8px}

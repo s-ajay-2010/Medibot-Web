@@ -1,6 +1,9 @@
-/directoryflow.txt
-/.env
-/node_modules
-/venve
-/uploads
-/medibot.db
+venv/
+__pycache__/
+uploads/
+*.db
+*.sqlite
+*.keystore
+signing-key-info.txt
+.env
+.DS_Store
