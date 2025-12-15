@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Medibot S2</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
 
@@ -27,14 +27,12 @@
     <div class="card">
       <h2>Reminders & Notes</h2>
 
-      <input type="text" placeholder="Medicine / Task name" id="reminderName">
+      <input id="reminderName" type="text" placeholder="Medicine/Task Name">
       <input type="time" id="reminderTime">
-      <button onclick="addReminder()">Add Reminder</button>
-      <div id="reminderStatus" class="status"></div>
       <div id="reminderList" class="checklist"></div>
-      <ul id="reminderList" class="reminder-list"></ul>
-      <button onclick="deleteCompletedReminders()">Delete completed</button>
-      
+
+      <button onclick="addReminder()">Add Reminder</button>
+      <button id="deleteBtn" onclick="deleteCompletedReminders()" disabled>Delete completed</button>
 
       <h3>Water</h3>
       <p><strong id="waterCount">0</strong> glasses today</p>
@@ -46,25 +44,26 @@
   <!-- RIGHT COLUMN -->
   <div class="column">
 
-    <div class="card">
-      <h2>Chat / Ask</h2>
-      <textarea id="chatInput" placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
-      <div class="row">
-        <button onclick="askAI()">Ask</button>
-        <button onclick="dailySummary()">Daily Summary</button>
-      </div>
-      <div id="chatOutput" class="output"></div>
+  <div class="card">
+    <h2>Chat / Ask</h2>
+    <textarea id="chatInput"placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
+    <div class="row">
+      <button onclick="askAI()">Ask</button>
+      <!-- <button onclick="dailySummary()">Daily Summary</button> -->
     </div>
+    <div id="chatOutput" class="output" ></div>
+  </div>
+
 
     <div class="card">
-      <h2>Image Explainer (educational)</h2>
-      <input type="file" id="imageFile">
-      <button onclick="uploadImage()">Upload & Analyze</button>
-
       <h3>Medibot Vision (educational)</h3>
+      <div class="row">
+      <div class="image-actions"><input type="file" id="imageFile"></div>
+      <button onclick="uploadImage()">Upload & Analyze</button>
+      </div>
       <div id="imageOutput" class="output"></div>
 
-    
+     
     </div>
 
   </div>
@@ -72,9 +71,10 @@
 </main>
 
 <footer>
-  <p>Disclaimer: Educational only. Not a medical diagnosis.</p>
+  Disclaimer: Educational only. Not a medical diagnosis.
 </footer>
-
 <script src="/static/app.js"></script>
+
+
 </body>
 </html>

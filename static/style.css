@@ -90,7 +90,7 @@ button:hover {
 .output {
   margin-top: 10px;
   padding: 10px;
-  background: #0a0d12;
+  background: #00000076;
   border-radius: 8px;
   min-height: 40px;
   white-space: pre-wrap;
@@ -119,3 +119,12 @@ footer {
 .check-item input {
   margin-right: 8px;
 }
+.image-actions {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  padding: 5px 5px;
+  background: #0200007e;
+  border-radius: 8px;
+}
+
