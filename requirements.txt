@@ -4,3 +4,6 @@ pillow
 opencv-python-headless
 numpy
 werkzeug
+google
+google-generativeai
+google.generativeai
