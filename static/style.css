@@ -1,8 +1,121 @@
-body{background:#0f1013;color:#e9eef2;font-family:Inter,Segoe UI,Arial;padding:12px}
-.container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-header{text-align:center}
-.card{background:#111315;padding:18px;border-radius:12px;border:1px solid #1f2226}
-textarea,input{width:100%;padding:8px;border-radius:6px;border:1px solid #222;background:#0b0c0f;color:#eaeef2}
-button{padding:8px 12px;border-radius:8px;border:none;background:#00c0ff;color:#002}
-.result{background:#050608;padding:10px;border-radius:6px;color:#9fb4c7;white-space:pre-wrap;min-height:40px}
-.disclaimer{grid-column:1/-1;margin-top:10px;padding:10px;background:#0b0c0f;border-radius:8px}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f1116, #050608);
+  color: #fff;
+}
+
+header {
+  padding: 30px 40px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  color: #aaa;
+  margin-top: 5px;
+}
+
+main.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 0 40px 40px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: linear-gradient(180deg, #14171d, #0b0d11);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  margin-top: 18px;
+}
+
+textarea, input[type="text"], input[type="time"] {
+  width: 100%;
+  background: #0c0f14;
+  border: 1px solid #1f2330;
+  border-radius: 8px;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+button {
+  background: #00b7ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.output {
+  margin-top: 10px;
+  padding: 10px;
+  background: #0a0d12;
+  border-radius: 8px;
+  min-height: 40px;
+  white-space: pre-wrap;
+}
+
+.dev {
+  margin-top: 15px;
+  color: #777;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  color: #666;
+  padding-bottom: 20px;
+}
+.checklist {
+  margin-top: 10px;
+}
+
+.check-item {
+  margin: 6px 0;
+  color: #ddd;
+}
+
+.check-item input {
+  margin-right: 8px;
+}

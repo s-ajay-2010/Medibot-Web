@@ -1,4 +1,3 @@
-// basic service worker - very simple caching strategy.
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => clients.claim());
 self.addEventListener('fetch', e => {

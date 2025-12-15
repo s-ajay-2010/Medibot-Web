@@ -1,68 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Medibot S2 — Educational Health Assistant</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="manifest" href="/static/manifest.json">
+  <meta charset="UTF-8">
+  <title>Medibot S2</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="container">
-    <header><h1>Medibot S2</h1><p>Your educational health companion (not a diagnosis)</p></header>
 
-    <section class="card">
-      <h2>Chat / Ask</h2>
-      <textarea id="chatInput" placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
-      <div style="display:flex;gap:8px;">
-        <button id="btnChat">Ask</button>
-        <button id="btnSummary">Daily Summary</button>
-      </div>
-      <pre id="chatOut" class="result"></pre>
-    </section>
+<header>
+  <h1>Medibot S2</h1>
+  <p>Your educational health companion (not a diagnosis)</p>
+</header>
 
-    <section class="card">
+<main class="grid">
+
+  <!-- LEFT COLUMN -->
+  <div class="column">
+
+    <div class="card">
       <h2>Summarize Medical Text</h2>
-      <textarea id="reportText" placeholder="Paste report or clinical note"></textarea>
-      <button id="btnSumm">Summarize</button>
-      <pre id="summOut" class="result"></pre>
-    </section>
+      <textarea id="summaryInput" placeholder="Paste report or clinical note"></textarea>
+      <button onclick="summarize()">Summarize</button>
+      <div id="summaryOutput" class="output"></div>
+    </div>
 
-    <section class="card">
-      <h2>Image Explainer (educational)</h2>
-      <input type="file" id="imageFile" accept="image/*">
-      <button id="btnUpload">Upload & Analyze</button>
-
-      <h3>Medibot Vision (educational)</h3>
-      <pre id="geminiOut" class="result"></pre>
-
-      <p>Test server file (for dev):</p>
-      <input id="localPath" placeholder="/path/to/file" value="" />
-      <button id="btnAnalyzeLocal">Analyze Server File (test)</button>
-    </section>
-
-    <section class="card">
+    <div class="card">
       <h2>Reminders & Notes</h2>
-      <input id="remName" placeholder="Medicine / Task name" />
-      <input id="remTime" type="time" />
-      <button id="btnAddRem">Add Reminder</button>
-      <ul id="remList"></ul>
 
-      <h3>Notes</h3>
-      <textarea id="noteText" placeholder="Daily notes..."></textarea>
-      <button id="btnAddNote">Save Note</button>
-      <ul id="noteList"></ul>
+      <input type="text" placeholder="Medicine / Task name" id="reminderName">
+      <input type="time" id="reminderTime">
+      <button onclick="addReminder()">Add Reminder</button>
+      <div id="reminderStatus" class="status"></div>
+      <div id="reminderList" class="checklist"></div>
+      <ul id="reminderList" class="reminder-list"></ul>
+      <button onclick="deleteCompletedReminders()">Delete completed</button>
+      
 
       <h3>Water</h3>
-      <div><span id="waterCount">0</span> glasses today</div>
-      <button id="btnAddWater">+ Drink</button>
-    </section>
+      <p><strong id="waterCount">0</strong> glasses today</p>
+      <button onclick="addWater()">+ Drink</button>
+    </div>
 
-    <footer class="disclaimer">
-      <strong>Disclaimer:</strong> This is educational only. Not a medical diagnosis. Seek a licensed clinician for medical decisions.
-    </footer>
   </div>
 
-  <script src="/static/app_full.js"></script>
+  <!-- RIGHT COLUMN -->
+  <div class="column">
+
+    <div class="card">
+      <h2>Chat / Ask</h2>
+      <textarea id="chatInput" placeholder="Ask questions (e.g., 'How to manage mild fever?')"></textarea>
+      <div class="row">
+        <button onclick="askAI()">Ask</button>
+        <button onclick="dailySummary()">Daily Summary</button>
+      </div>
+      <div id="chatOutput" class="output"></div>
+    </div>
+
+    <div class="card">
+      <h2>Image Explainer (educational)</h2>
+      <input type="file" id="imageFile">
+      <button onclick="uploadImage()">Upload & Analyze</button>
+
+      <h3>Medibot Vision (educational)</h3>
+      <div id="imageOutput" class="output"></div>
+
+    
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p>Disclaimer: Educational only. Not a medical diagnosis.</p>
+</footer>
+
+<script src="/static/app.js"></script>
 </body>
 </html>

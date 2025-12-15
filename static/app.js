@@ -1,110 +1,183 @@
-const API = (p) => `/api/${p}`;
+/* ---------------- CHAT ---------------- */
+async function askAI() {
+  const input = document.getElementById("chatInput").value.trim();
+  const output = document.getElementById("chatOutput");
 
-// helper
-async function postJSON(path, body){
-  const res = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
-  return res.json();
+  if (!input) {
+    output.innerText = "Please enter a question.";
+    return;
+  }
+
+  output.innerText = "Thinking...";
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input })
+    });
+
+    const data = await res.json();
+    output.innerText = data.reply || "No response.";
+  } catch {
+    output.innerText = "Server error.";
+  }
 }
-async function getJSON(path){ const res = await fetch(path); return res.json(); }
 
-// Chat
-document.getElementById('btnChat').onclick = async ()=>{
-  const txt = document.getElementById('chatInput').value.trim();
-  if(!txt) return alert('Type a message');
-  const r = await postJSON(API('chat'), {message: txt});
-  document.getElementById('chatOut').innerText = r.reply || JSON.stringify(r);
-};
+/* ---------------- SUMMARIZE ---------------- */
+async function summarize() {
+  const text = document.getElementById("summaryInput").value.trim();
+  const output = document.getElementById("summaryOutput");
 
-// Voice (simple demo)
-let mediaRecorder;
-document.getElementById('btnVoice').onclick = async ()=>{
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return alert('Voice not supported in this browser.');
-  const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-  mediaRecorder = new MediaRecorder(stream);
-  let chunks=[];
-  mediaRecorder.ondataavailable = e => chunks.push(e.data);
-  mediaRecorder.onstop = async ()=>{
-    const blob = new Blob(chunks, {type:'audio/webm'});
-    const r = await postJSON(API('chat'), {message: "User recorded an audio message (transcription not enabled in demo). Describe how to proceed."});
-    document.getElementById('chatOut').innerText = r.reply;
-  };
-  mediaRecorder.start();
-  alert('Recording for 5 seconds...');
-  setTimeout(()=>{ mediaRecorder.stop(); stream.getTracks().forEach(t=>t.stop()); }, 5000);
-};
+  if (!text) {
+    output.innerText = "Paste some medical text first.";
+    return;
+  }
 
-// Daily summary
-document.getElementById('btnSummary').onclick = async ()=>{
-  const r = await getJSON(API('daily_summary'));
-  document.getElementById('chatOut').innerText = r.summary || JSON.stringify(r);
-};
+  output.innerText = "Summarizing...";
 
-// Summarize
-document.getElementById('btnSumm').onclick = async ()=>{
-  const t = document.getElementById('reportText').value.trim();
-  if(!t) return alert('Paste text');
-  const r = await postJSON(API('summarize'), {text: t});
-  document.getElementById('summOut').innerText = r.summary || JSON.stringify(r);
-};
+  try {
+    const res = await fetch("/api/summarize", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
 
-// Image Upload (two outputs)
-document.getElementById('btnUpload').onclick = async ()=>{
-  const f = document.getElementById('imageFile').files[0];
-  if(!f) return alert('Choose image');
-  const fd = new FormData();
-  fd.append('image', f);
-  const res = await fetch('/api/upload_image', {method:'POST', body: fd});
-  const j = await res.json();
-  document.getElementById('localOut').innerText = j.local_description || JSON.stringify(j);
-  document.getElementById('geminiOut').innerText = j.gemini_description || "No Gemini output";
-};
-
-// analyze server local file (for your screenshot)
-document.getElementById('btnAnalyzeLocal').onclick = async ()=>{
-  const path = document.getElementById('localPath').value.trim();
-  if(!path) return alert('enter path');
-  const r = await postJSON(API('analyze_local'), {path});
-  document.getElementById('localOut').innerText = r.local_description || JSON.stringify(r);
-  document.getElementById('geminiOut').innerText = r.gemini_description || "No Gemini output";
-};
-
-// Reminders + Notes + Water
-document.getElementById('btnAddRem').onclick = async ()=>{
-  const name = document.getElementById('remName').value, time = document.getElementById('remTime').value;
-  if(!name || !time) return alert('fill');
-  const r = await postJSON(API('reminder'), {name, time});
-  refreshRem();
-};
-
-async function refreshRem(){
-  const r = await getJSON(API('reminders'));
-  const ul = document.getElementById('remList'); ul.innerHTML = '';
-  r.reminders.forEach(x=>{ let li=document.createElement('li'); li.innerText = `${x.name} at ${x.time}`; ul.appendChild(li); });
+    const data = await res.json();
+    output.innerText = data.summary || "No summary returned.";
+  } catch {
+    output.innerText = "Server error.";
+  }
 }
-refreshRem();
 
-document.getElementById('btnAddNote').onclick = async ()=>{
-  const txt = document.getElementById('noteText').value.trim();
-  if(!txt) return alert('type note');
-  const r = await postJSON(API('notes'), {content: txt});
-  refreshNotes();
-};
-async function refreshNotes(){
-  const r = await getJSON(API('notes'));
-  const ul = document.getElementById('noteList'); ul.innerHTML='';
-  r.notes.forEach(n=>{ let li=document.createElement('li'); li.innerText = `${n.content}`; ul.appendChild(li); });
+/* ---------------- IMAGE ---------------- */
+async function uploadImage() {
+  const fileInput = document.getElementById("imageFile");
+  const output = document.getElementById("imageOutput");
+
+  if (!fileInput.files.length) {
+    output.innerText = "Please choose an image.";
+    return;
+  }
+
+  output.innerText = "Analyzing image...";
+
+  const formData = new FormData();
+  formData.append("image", fileInput.files[0]);
+
+  try {
+    const res = await fetch("/api/upload_image", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    output.innerText =
+      data.medical_assistance ||
+      data.error ||
+      "No analysis returned.";
+  } catch {
+    output.innerText = "Image analysis failed.";
+  }
 }
-refreshNotes();
 
-document.getElementById('btnAddWater').onclick = async ()=>{
-  const date = new Date().toISOString().slice(0,10);
-  const cur = await getJSON(API('water') + '?date=' + encodeURIComponent(date));
-  let count = (cur.count || 0) + 1;
-  await postJSON(API('water'), {date, count});
-  document.getElementById('waterCount').innerText = count;
-};
-(async ()=>{ // init water count for today
-  const date = new Date().toISOString().slice(0,10);
-  const cur = await getJSON(API('water') + '?date=' + encodeURIComponent(date));
-  document.getElementById('waterCount').innerText = (cur.count || 0);
-})();
+/* ---------------- REMINDERS ---------------- */
+async function addReminder() {
+  const name = document.getElementById("reminderName").value.trim();
+  const time = document.getElementById("reminderTime").value;
+  const status = document.getElementById("reminderStatus");
+
+  if (!name || !time) {
+    status.innerText = "Please enter name and time.";
+    return;
+  }
+
+  status.innerText = "Saving...";
+
+  try {
+    const res = await fetch("/api/reminder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, time })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      status.innerText = "Reminder added successfully ✅";
+      document.getElementById("reminderName").value = "";
+      document.getElementById("reminderTime").value = "";
+      loadReminders();
+    } else {
+      status.innerText = "Failed to add reminder.";
+    }
+  } catch {
+    status.innerText = "Server error.";
+  }
+}
+
+async function loadReminders() {
+  const res = await fetch("/api/reminders");
+  const data = await res.json();
+
+  const list = document.getElementById("reminderList");
+  list.innerHTML = "";
+
+  data.reminders.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "check-item";
+
+    div.innerHTML = `
+      <label>
+        <input type="checkbox"
+               ${r.completed ? "checked" : ""}
+               onchange="completeReminder(${r.id})">
+        <strong>${r.time}</strong> — ${r.name}
+      </label>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+async function completeReminder(id) {
+  await fetch(`/api/reminder/${id}/complete`, { method: "POST" });
+}
+
+async function deleteCompletedReminders() {
+  await fetch("/api/reminders/completed", { method: "DELETE" });
+  loadReminders();
+}
+
+/* ---------------- WATER ---------------- */
+async function addWater() {
+  const res = await fetch("/api/water", { method: "POST" });
+  const data = await res.json();
+  document.getElementById("waterCount").innerText = data.count;
+}
+
+async function loadWater() {
+  const res = await fetch("/api/water");
+  const data = await res.json();
+  document.getElementById("waterCount").innerText = data.count;
+}
+
+/* ---------------- DAILY SUMMARY ---------------- */
+async function dailySummary() {
+  const output = document.getElementById("chatOutput");
+  output.innerText = "Generating daily summary...";
+
+  try {
+    const res = await fetch("/api/daily_summary");
+    const data = await res.json();
+    output.innerText = data.summary || "No summary available.";
+  } catch {
+    output.innerText = "Server error.";
+  }
+}
+
+/* ---------------- INIT ---------------- */
+window.addEventListener("load", () => {
+  loadReminders();
+  loadWater();
+});
