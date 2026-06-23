@@ -1,6 +1,8 @@
-Medibot — Web version (PWA)
+# DOWN FOR MAINTAINANCE
 
-To use this repo:
+## Medibot — Web version (PWA)
+
+### To use this repo:
   - In terminal: git clone https://github.com/s-ajay-2010/Medibot-Web.git .
   - Create a python virtual environment(by entering: python3 venv {your virtual environment's name}) or straightaway proceed to next step if the next step works perfectly.
   - In terminal goto the cloned repo's folder and then: pip -r requirements.txt .
